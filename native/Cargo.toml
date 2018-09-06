@@ -1,0 +1,21 @@
+[package]
+name = "holochain-node"
+version = "0.1.0"
+authors = ["Julian Laubstein <contact@julianlaubstein.de>"]
+license = "MIT"
+build = "build.rs"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "holochain_node"
+crate-type = ["dylib"]
+
+[build-dependencies]
+neon-build = "0.2.0"
+
+[dependencies]
+neon = "0.2.0"
+holochain_core_api = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
+holochain_dna = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
+base64 = "0.9"
+serde_json = "1.0"

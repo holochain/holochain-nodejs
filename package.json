@@ -1,0 +1,14 @@
+{
+  "name": "holochain-node",
+  "version": "0.1.0",
+  "description": "Node bindings for holochain",
+  "main": "lib/index.js",
+  "author": "Julian Laubstein <contact@julianlaubstein.de>",
+  "license": "MIT",
+  "dependencies": {
+    "neon-cli": "^0.2.0"
+  },
+  "scripts": {
+    "install": "neon build"
+  }
+}
