@@ -48,19 +48,60 @@ declare_types! {
         method start(mut ctx) {
             let mut this = ctx.this();
 
-            let start_res = {
+            let start_result = {
                 let guard = ctx.lock();
                 let mut app = this.borrow_mut(&guard);
 
                 app.instance.start()
             };
 
-            start_res.or_else(|_| {
+            start_result.or_else(|_| {
                 let error_string = ctx.string("unable to start hApp");
                 ctx.throw(error_string)
             })?;
 
             Ok(ctx.undefined().upcast())
+        }
+
+        method stop(mut ctx) {
+            let mut this = ctx.this();
+
+            let start_result = {
+                let guard = ctx.lock();
+                let mut app = this.borrow_mut(&guard);
+
+                app.instance.stop()
+            };
+
+            start_result.or_else(|_| {
+                let error_string = ctx.string("unable to stop hApp");
+                ctx.throw(error_string)
+            })?;
+
+            Ok(ctx.undefined().upcast())
+        }
+
+        method call(mut ctx) {
+            let zome = ctx.argument::<JsString>(0)?.to_string(&mut ctx)?.value();
+            let cap = ctx.argument::<JsString>(1)?.to_string(&mut ctx)?.value();
+            let fn_name = ctx.argument::<JsString>(2)?.to_string(&mut ctx)?.value();
+            let params = ctx.argument::<JsString>(3)?.to_string(&mut ctx)?.value();
+
+            let mut this = ctx.this();
+
+            let call_result = {
+                let guard = ctx.lock();
+                let mut app = this.borrow_mut(&guard);
+
+                app.instance.call(&zome, &cap, &fn_name, &params)
+            };
+
+            let res_string = call_result.or_else(|_| {
+                let error_string = ctx.string("unable to call zome function");
+                ctx.throw(error_string)
+            })?;
+
+            Ok(ctx.string(res_string).upcast())
         }
     }
 }
