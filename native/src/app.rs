@@ -28,11 +28,11 @@ declare_types! {
 
             let agent = Agent::from_string(agent_name);
 
-            let context = Arc::new(HolochainContext {
+            let context = Arc::new(HolochainContext::new(
                 agent,
-                logger: Arc::new(Mutex::new(NullLogger {})),
-                persister: Arc::new(Mutex::new(SimplePersister::new())),
-            });
+                Arc::new(Mutex::new(NullLogger {})),
+                Arc::new(Mutex::new(SimplePersister::new())),
+            ));
 
             let dna = Dna::from_json_str(&dna_data).expect("unable to parse dna data");
 
