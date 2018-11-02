@@ -1,6 +1,6 @@
 {
   "name": "@holochain/holochain-nodejs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node bindings for holochain",
   "main": "index.js",
   "author": "Julian Laubstein <contact@julianlaubstein.de>",
