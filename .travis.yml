@@ -73,7 +73,7 @@ before_script:
     - rustup component add rustfmt-preview
     - yarn install --ignore-scripts
 script:
-    - pushd native/ && cargo fmt -- --check && popd
+    # - pushd native/ && cargo fmt -- --check && popd
     - node publish.js
 
 # # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
