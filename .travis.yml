@@ -1,0 +1,92 @@
+sudo: false
+language: rust
+rust:
+- nightly
+
+# all unlabeled jobs run at test. Only if all "test" jobs finish, will the publish job run
+stages:
+  - test
+  - publish
+
+jobs:
+  include:
+
+  # PRs, pushes to master, and tags build on all target arches
+  # if this is release tag, the resultant binary will be uploaded to github
+  - name: "Linux - Node 8"
+    os: linux
+    env:
+    - TRAVIS_NODE_VERSION="8"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "OSX - Node 8"
+    os: osx
+    env:
+    - TRAVIS_NODE_VERSION="8"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "Linux - Node 10"
+    os: linux
+    env:
+    - TRAVIS_NODE_VERSION="10"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "OSX - Node 10"
+    os: osx
+    env:
+    - TRAVIS_NODE_VERSION="10"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+
+  # # Publish to npm only on release tag
+  # - stage: publish
+  #   name: "Publish to npm"
+  #   os: linux
+  #   env: 
+  #     - TRAVIS_NODE_VERSION="8"
+  #     - SKIP_DEPLOY=1
+      
+  #     # NPM_TOKEN 
+  #     - secure: 
+  #         DSyA0KDZogwoaekLIPmR9wll1Unpyftn6l0nRDgkPv8MmTTu2a84JO17EP0zaXtBQlfTqp0x33bDHIahtr1ItAi931TYW5279B16EZ1gM3GG0pCHFN6E7QznBYrAEfrtnUKaC1E85ivVcPlF7rtDy7nEnzlnE0Lc5dPk57LSGsQHxJBPaVJ2SCVS4yWArSzkC1XyUeHq37ApDrdfOkObbV/lSKn1wj/b/oIZW5aI4C+24X+rfjOa9CvwF6fst1rOEB/XLg/9OIyAb8b9KjsjMReX6i39KyruWODzIfoOjIXLDXQ2Z8HnBJIBDg4P36CqXIZcudecVdTG0S7oLkhBNnH67W+MirI4QHXpsUGL4jiLG8KfzZADpOE1aI44SY+XODrMYDqNbkNz1iD+fVuWhplywGIa3KHRlJxqfcT5T3CSOcsX1VY0gnCIK+5pyl71MM7Uacg++ZuICoLdMXULPypMViBLpCB4UBUvGsjBbiTXmaX4MWMgkb+LN1WKVwFAoNa1T6v7SoBsRQmeZ/yYlRR2p8wCBU7BjF7no4xX++725A8mOELF/To27Opc2v7zgXRKQUTEclZ6a/xCu3u8kryNsRRQv9Iv+LcLaFBMz39/qMg+DmKvriITY8RUBzjbNddget4m3caGbq6Hzu0RKvoXzC8HH83E49pVkFiH0R0=
+  #   if: tag =~ /^\d+\.\d+\.\d+/
+  #   before_install:
+  #     - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+  #   script: 
+  #     - echo "Deploying to NPM..."
+  #     - node publish.js --publish
+
+install:
+  # install our own yarn to make things work on osx
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.10.1
+  - export PATH=$HOME/.yarn/bin:$PATH
+  
+  # install our own nodejs to get a reasonable version
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+
+cache:
+    yarn: true
+    cargo: true
+    directories:
+        - node_modules
+before_script:
+    - rustup component add rustfmt-preview
+    - yarn install --ignore-scripts
+script:
+    - pushd native/ && cargo fmt -- --check && popd
+    - node publish.js
+
+# # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
+# deploy:
+#     provider: releases
+#     api_key:
+#         secure: bqeFXHY/NMLwbyIY4ch/KFhTyEpZFeO8MeHKTKEPdqk7OPh77aShiixUNNi1oBv8Nw4sjqM1nhx+j5UlPcbyPD4IWlosgPkYpNzZgcSUM61UEaSJ7oa3QYi6fT/qawTeGX7g7iVV72Sz9NMk+dSTZMSZM02iBcFczGgsfyq+cyV5HJiyP7DcSASARsXXt72D4B9GKVmqa6n5Dk8FSwE024h/duLtzPAEWAxK3eJsaDN0OdJKXq7/nTtEf0Hblbl0hkO4ce3RVZQg3nm0k1IDabglEMto9t6BavZobEm9YZoeePhAdH/WybSGBvJKwN29D9fNvNBf8UDBxa8gL3pIdLM8yucBWL888ku/zs6cAlg2BcY7e8gOiVuYUh8pznXPpYbo65N1w+EzuwQk/MgHPr/Fnh7Uois+1ymtQhxXbFqvqDXFDCHh7P3n4H6uN15iTpqdvHkC1HCnebL47bW657AD1spB6pNefWOUVpa66abWXmEoRakpGHaIdbhlKoaPo1tkImlSRbW/3Yt4zRSn3Dv1Va7vrRLtoJ4mD/ilD7QhmJK/ksqncS02hCQjiTExplS+2VjV4kZA4+lNmkTo3EyhS+DKZrPcXa/AMu/n7yFXpRNX6gUtDbbp8+QlODbOauooaL82RNb8Xw46jiqtUapKpo+dYOFwWFQgmSi5PKQ=
+#     file_glob: true
+#     file: bin-package/*.tar.gz
+#     skip_cleanup: true
+
+#     # publish only if we're building a tag and if the SKIP_DEPLOY is set to 0
+#     on:
+#         tags: true
+#         condition: $SKIP_DEPLOY = 0
+#     name: Version $TRAVIS_TAG
