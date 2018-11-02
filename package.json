@@ -6,14 +6,14 @@
   "author": "Julian Laubstein <contact@julianlaubstein.de>",
   "license": "MIT",
   "engines": {
-      "node": ">=8.0.0"
+    "node": ">=8.0.0"
   },
   "os": [
-      "darwin",
-      "linux"
+    "darwin",
+    "linux"
   ],
   "cpu": [
-      "x64"
+    "x64"
   ],
   "scripts": {
     "compile": "neon build -r",
@@ -27,9 +27,12 @@
     "shelljs": "^0.8.2"
   },
   "binary": {
-      "module_name": "index",
-      "module_path": "./bin-package",
-      "host": "https://github.com/holochain/holochain-nodejs/releases/download/",
-      "remote_path": "{version}"
+    "module_name": "index",
+    "module_path": "./bin-package",
+    "host": "https://github.com/holochain/holochain-nodejs/releases/download/",
+    "remote_path": "{version}"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
