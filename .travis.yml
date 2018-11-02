@@ -25,6 +25,12 @@ jobs:
     - TRAVIS_NODE_VERSION="8"
     - SKIP_DEPLOY=0
     if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "Windows - Node 8"
+    os: windows
+    env:
+    - TRAVIS_NODE_VERSION="8"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
   - name: "Linux - Node 10"
     os: linux
     env:
@@ -33,6 +39,12 @@ jobs:
     if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
   - name: "OSX - Node 10"
     os: osx
+    env:
+    - TRAVIS_NODE_VERSION="10"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "Windows - Node 10"
+    os: windows
     env:
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
