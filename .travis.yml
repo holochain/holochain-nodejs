@@ -38,23 +38,23 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
 
-  # # Publish to npm only on release tag
-  # - stage: publish
-  #   name: "Publish to npm"
-  #   os: linux
-  #   env: 
-  #     - TRAVIS_NODE_VERSION="8"
-  #     - SKIP_DEPLOY=1
+  # Publish to npm only on release tag
+  - stage: publish
+    name: "Publish to npm"
+    os: linux
+    env: 
+      - TRAVIS_NODE_VERSION="8"
+      - SKIP_DEPLOY=1
       
-  #     # NPM_TOKEN 
-  #     - secure: 
-  #         DSyA0KDZogwoaekLIPmR9wll1Unpyftn6l0nRDgkPv8MmTTu2a84JO17EP0zaXtBQlfTqp0x33bDHIahtr1ItAi931TYW5279B16EZ1gM3GG0pCHFN6E7QznBYrAEfrtnUKaC1E85ivVcPlF7rtDy7nEnzlnE0Lc5dPk57LSGsQHxJBPaVJ2SCVS4yWArSzkC1XyUeHq37ApDrdfOkObbV/lSKn1wj/b/oIZW5aI4C+24X+rfjOa9CvwF6fst1rOEB/XLg/9OIyAb8b9KjsjMReX6i39KyruWODzIfoOjIXLDXQ2Z8HnBJIBDg4P36CqXIZcudecVdTG0S7oLkhBNnH67W+MirI4QHXpsUGL4jiLG8KfzZADpOE1aI44SY+XODrMYDqNbkNz1iD+fVuWhplywGIa3KHRlJxqfcT5T3CSOcsX1VY0gnCIK+5pyl71MM7Uacg++ZuICoLdMXULPypMViBLpCB4UBUvGsjBbiTXmaX4MWMgkb+LN1WKVwFAoNa1T6v7SoBsRQmeZ/yYlRR2p8wCBU7BjF7no4xX++725A8mOELF/To27Opc2v7zgXRKQUTEclZ6a/xCu3u8kryNsRRQv9Iv+LcLaFBMz39/qMg+DmKvriITY8RUBzjbNddget4m3caGbq6Hzu0RKvoXzC8HH83E49pVkFiH0R0=
-  #   if: tag =~ /^\d+\.\d+\.\d+/
-  #   before_install:
-  #     - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-  #   script: 
-  #     - echo "Deploying to NPM..."
-  #     - node publish.js --publish
+      # NPM_TOKEN 
+      - secure: 
+          mZv6OpOC4Z+K5mEPGW2+TiNC5WtflXAXjISfq6GUXjGuYwCYw5ENn7j/iEU4gmT/jfw//T3kPUkUiuHPjhqsW4tU/eT0Yg68CnXtMMdi1NKJIuvsXjC8jVzteBvWzLlii/0/DM1LJhg63qJJpN6FJ+ElY5uscpTufY4zg202FyGGlHBqGcrIBqdEUpgPQsiu0dgbAhYEdmJLqITi4K6Zf8WbqXKE9XzmoWlNwC38nG511Jw7ogqlMUS9PbgLRURESMBrmba9bzrRLjC1mq4OIGftCMuWoWi6Qt8ZnPvZ0s5YyyFkdsHoEL6qLsBWwCEq6Kl47TTu1GjcdFx5LdNWSDSnQHBerBBG0A2CFFa9o8eQoKj+mxiW0pEIKpPfsHtzyZirssZOb9enkUHfOr4XhLyGMENKShb+VAsQM7ogO6eLd27MhoXR9E+ykfXGB52ohQoMWtLkQZIraiEeTHwopJgk1CjAt/EJvgGmoRIzt3d4cFL4pVMa/VRg8EoPjyFZnOsBkz+NZLMLkoB9QxmqD4EAiAUh9RDi8bttGI2v/FvWFfBNL2YhI+/RubTvosowiASIIArk9THjJtfTCoRaby7FCwYvA/FAlAIXcxy53yw9OIZLqj+KVNoJ4t+Tag+057sOES3mMXwbXBLOBpfGqRt7yRUn5Lrv/REO2gUzpwk=
+    if: tag =~ /^\d+\.\d+\.\d+/
+    before_install:
+      - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+    script: 
+      - echo "Deploying to NPM..."
+      - node publish.js --publish
 
 install:
   # install our own yarn to make things work on osx
