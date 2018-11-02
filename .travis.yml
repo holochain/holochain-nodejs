@@ -76,17 +76,17 @@ script:
     # - pushd native/ && cargo fmt -- --check && popd
     - node publish.js
 
-# # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
-# deploy:
-#     provider: releases
-#     api_key:
-#         secure: bqeFXHY/NMLwbyIY4ch/KFhTyEpZFeO8MeHKTKEPdqk7OPh77aShiixUNNi1oBv8Nw4sjqM1nhx+j5UlPcbyPD4IWlosgPkYpNzZgcSUM61UEaSJ7oa3QYi6fT/qawTeGX7g7iVV72Sz9NMk+dSTZMSZM02iBcFczGgsfyq+cyV5HJiyP7DcSASARsXXt72D4B9GKVmqa6n5Dk8FSwE024h/duLtzPAEWAxK3eJsaDN0OdJKXq7/nTtEf0Hblbl0hkO4ce3RVZQg3nm0k1IDabglEMto9t6BavZobEm9YZoeePhAdH/WybSGBvJKwN29D9fNvNBf8UDBxa8gL3pIdLM8yucBWL888ku/zs6cAlg2BcY7e8gOiVuYUh8pznXPpYbo65N1w+EzuwQk/MgHPr/Fnh7Uois+1ymtQhxXbFqvqDXFDCHh7P3n4H6uN15iTpqdvHkC1HCnebL47bW657AD1spB6pNefWOUVpa66abWXmEoRakpGHaIdbhlKoaPo1tkImlSRbW/3Yt4zRSn3Dv1Va7vrRLtoJ4mD/ilD7QhmJK/ksqncS02hCQjiTExplS+2VjV4kZA4+lNmkTo3EyhS+DKZrPcXa/AMu/n7yFXpRNX6gUtDbbp8+QlODbOauooaL82RNb8Xw46jiqtUapKpo+dYOFwWFQgmSi5PKQ=
-#     file_glob: true
-#     file: bin-package/*.tar.gz
-#     skip_cleanup: true
+# deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
+deploy:
+    provider: releases
+    api_key:
+        secure: QEtdpmu5AQfpv2uziOo3yZzlibXFvTjw4zu8LisXAJr2kJIBSIvZnLkjWTCbVqXkRJduw3Qbi8YMBM0oUJih3MQzeC4MySbx8l/kxqMH1rckk5YKy4IYraelNVtbQ6mxwCzYGxS5ACxU3HcV/RwnyVtqBLpAd1+hLfNldddoX6c7y2wEDomMFBb3WmbukzRSD8FWBV4eVd69famRA1XthzjDuJoaErpHrNgUSi9sn1ovcO7owCrIoT/uyR14T8mp/kfelPMzE3jYt9E3a3hWU/mMeqNfElHGKdajSPiqdB/LJVyU1HFXGuTPiZvJTJOIpK/scbSr97gvVmAgB/6APj9nukJyOTEKNZVXkSRpU0AMsjkAVHsaIBcTV62I/Tfqweu/SMnTvUqawvm+qu9MbIrMPsMMs/KjIkPoE5U4j5D8L++B5pD81tkdmIXZtmWKbbQVN0/jXUUbr5DHuHmNOMmvMwFd9ScdTEvA2TbULi9MnOhS9GURfgzO6a0W4p15NLY9M73HUH0VYdkBFPz5aHHhg5tE9WXeFD+7siKniXLLX71C1qC06hKnLFwix9X+UJP2TLVQjOy1xPpBL7W7xB35XdZ1h96HLNI5BCQ3yjB8yCQtxV8wyt5oEJrsDxWIYwJd1KN3+gZKCf6NMz6MBoSwbntQeJic2zjTqc9kx5I=
+    file_glob: true
+    file: bin-package/*.tar.gz
+    skip_cleanup: true
 
-#     # publish only if we're building a tag and if the SKIP_DEPLOY is set to 0
-#     on:
-#         tags: true
-#         condition: $SKIP_DEPLOY = 0
-#     name: Version $TRAVIS_TAG
+    # publish only if we're building a tag and if the SKIP_DEPLOY is set to 0
+    on:
+        tags: true
+        condition: $SKIP_DEPLOY = 0
+    name: Version $TRAVIS_TAG
