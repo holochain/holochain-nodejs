@@ -1,6 +1,12 @@
-const fs = require('fs');
 
-const HolochainApp = require('./native').HolochainApp;
+var binary = require('node-pre-gyp');
+const fs = require('fs');
+var path = require('path')
+
+// deals with ensuring the correct version for the machine/node version
+var binding_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
+
+var HolochainApp = require(binding_path).HolochainApp;
 
 module.exports = {
   loadAndInstantiate: function(fileName) {

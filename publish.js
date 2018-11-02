@@ -42,7 +42,7 @@ shell.exec("yarn run compile");
 // shell.exec("yarn test");
 shell.mkdir("./dist");
 
-shell.cp(["README.md", "package.json"], "./dist");
+shell.cp(["README.md", "package.json", "index.js"], "./dist");
 
 //Add a NPM install script to the package.json that we push to NPM so that when consumers pull it down it
 //runs the expected node-pre-gyp step.
