@@ -5,10 +5,12 @@ use holochain_core::{
 use holochain_cas_implementations::{cas::file::FilesystemStorage, eav::file::EavFileStorage};
 use holochain_core_api::Holochain;
 use holochain_dna::Dna;
+use holochain_core_types::json::JsonString;
 use neon::context::Context;
 use neon::prelude::*;
 use std::sync::{Arc, Mutex};
 use tempfile::tempdir;
+use std::convert::TryFrom;
 
 #[derive(Clone, Debug)]
 struct NullLogger {}
@@ -39,11 +41,12 @@ declare_types! {
                         .unwrap(),
             ).unwrap());
 
-            let dna = Dna::from_json_str(&dna_data).expect("unable to parse dna data");
+            let dna = Dna::try_from(JsonString::from(dna_data)).expect("unable to parse dna data");
 
             Ok(App {
-                instance: Holochain::new(dna, context).or_else(|_| {
-                    let error_string = ctx.string("unable to create Holochain");
+                instance: Holochain::new(dna, context)
+                .or_else(|error| {
+                    let error_string = ctx.string(format!("Unable to instantiate DNA with error: {}", error));
                     ctx.throw(error_string)
                 })?,
                 hash: "ab83bae71f53b18d7ea8db36193baf48bf82aff392aab4".into(),
@@ -92,6 +95,8 @@ declare_types! {
             let fn_name = ctx.argument::<JsString>(2)?.to_string(&mut ctx)?.value();
             let params = ctx.argument::<JsString>(3)?.to_string(&mut ctx)?.value();
 
+            println!("{}", params);
+
             let mut this = ctx.this();
 
             let call_result = {
@@ -106,7 +111,8 @@ declare_types! {
                 ctx.throw(error_string)
             })?;
 
-            Ok(ctx.string(res_string).upcast())
+            let result_string: String = res_string.into();
+            Ok(ctx.string(result_string).upcast())
         }
     }
 }

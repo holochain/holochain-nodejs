@@ -19,24 +19,24 @@ jobs:
     - TRAVIS_NODE_VERSION="8"
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-  # - name: "OSX - Node 8"
-  #   os: osx
-  #   env:
-  #   - TRAVIS_NODE_VERSION="8"
-  #   - SKIP_DEPLOY=0
-  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-  # - name: "Linux - Node 10"
-  #   os: linux
-  #   env:
-  #   - TRAVIS_NODE_VERSION="10"
-  #   - SKIP_DEPLOY=0
-  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-  # - name: "OSX - Node 10"
-  #   os: osx
-  #   env:
-  #   - TRAVIS_NODE_VERSION="10"
-  #   - SKIP_DEPLOY=0
-  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "OSX - Node 8"
+    os: osx
+    env:
+    - TRAVIS_NODE_VERSION="8"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "Linux - Node 10"
+    os: linux
+    env:
+    - TRAVIS_NODE_VERSION="10"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "OSX - Node 10"
+    os: osx
+    env:
+    - TRAVIS_NODE_VERSION="10"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
 
   # Publish to npm only on release tag
   - stage: publish
@@ -46,9 +46,6 @@ jobs:
       - TRAVIS_NODE_VERSION="8"
       - SKIP_DEPLOY=1
       
-      # NPM_TOKEN 
-      - secure: 
-          HTIi4cnmLqwQYYeWQQ7lbe29uZDc58tggj0W34lxnGLLV5esaboLtDVL/OyKxzA6JxtKRScfgkbrEMeMkw0vfoHZ1MCkO4GFnfaGJ2TrwCRbnvogcgC8WP+kFQqgkH2FIXPKLpsnDm6iAf+9xkbe5PUst6XK0enqVMS86ySK6CHw/zkMCI2soF9mOCES/Z/eyz5ApYZn4A5gfZAbHloOh4o3tvGMoY9Vi8o7B0lTGGhOcwurVojeG5zIkBCuhtSi/e7eo2w4xVxGyV7ULYLk1Mfvq4UgRhYS2FUhEvJejL5qaOpCQeC1wvJe5ciXc2gX02RezgCe9E2NJg4jTGUMgr57PfO1vtHb3xesQ7oeNsHlo4ReWcsAm0UDgFwhzQtFEE2c0ZOU6bYr2/Q3cCubMD/JyD58AIywbxog6UhGdj47w/PiYkwDjByFRazriIdlrrxqITDFpftQu0P84LhvRdS6y2pbYXdzZCSEv0DAlBN02e1mUWcESxv03i38kYb9/fn5Jfmd2ynxrSJYCQuZUBTy/P8kRVxOLmN1J4MkUPnbt3TDjtTppHzKbYgx4yXhRzOb9t63z0j23AErlyoyFzuJAREHbAijVQRa9vfN45UgFBAg8p1mIOpT2cPzLOO7qyUkey/mqIFEs0fQYi1ZQWj7/p90TpwPU+YPj6iWJZA=
     if: tag =~ /^v\d+\.\d+\.\d+/
     before_install:
       - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
