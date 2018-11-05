@@ -29,7 +29,7 @@
   "binary": {
     "module_name": "index",
     "module_path": "./bin-package",
-    "host": "https://github.com/willemolding/holochain-nodejs/releases/download/",
+    "host": "https://github.com/holochain/holochain-nodejs/releases/download/",
     "remote_path": "v{version}"
   },
   "publishConfig": {

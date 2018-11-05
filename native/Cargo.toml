@@ -15,12 +15,12 @@ neon-build = "0.2.0"
 
 [dependencies]
 neon = "0.2.0"
-holochain_core_api = { git = "https://github.com/holochain/holochain-rust", branch = "jsonstring" }
-holochain_core = { git = "https://github.com/holochain/holochain-rust", branch = "jsonstring" }
-holochain_dna = { git = "https://github.com/holochain/holochain-rust", branch = "jsonstring" }
-holochain_agent = { git = "https://github.com/holochain/holochain-rust", branch = "jsonstring" }
-holochain_core_types = { git = "https://github.com/holochain/holochain-rust", branch = "jsonstring" }
-holochain_cas_implementations = { git = "https://github.com/holochain/holochain-rust", branch = "jsonstring" }
+holochain_core_api = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
+holochain_core = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
+holochain_dna = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
+holochain_agent = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
+holochain_core_types = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
+holochain_cas_implementations = { git = "https://github.com/holochain/holochain-rust", branch = "develop" }
 tempfile="3"
 
 base64 = "0.9"
