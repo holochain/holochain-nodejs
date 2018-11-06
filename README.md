@@ -32,3 +32,12 @@ See also the example directory
 ## Deployment
 
 Tagging the master branch with the format `vX.X.X` will cause the CI to build for all platforms, upload the binaries to github releases and publish the package to npm.
+
+## Authors
+
+- Julian Laubstein <contact@julianlaubstein.de>
+- Willem Olding <willem.olding@holo.host>
+
+## Acknowledgments
+
+- Thanks to IronCoreLabs for the example of deploying neon modules via npm (https://github.com/IronCoreLabs/recrypt-node-binding)
