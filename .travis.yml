@@ -13,45 +13,55 @@ jobs:
 
   # PRs, pushes to master, and tags build on all target arches
   # if this is release tag, the resultant binary will be uploaded to github
-  - name: "Linux - Node 8"
-    os: linux
+  # - name: "Linux - Node 8"
+  #   os: linux
+  #   env:
+  #   - TRAVIS_NODE_VERSION="8"
+  #   - SKIP_DEPLOY=0
+  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+
+  # - name: "OSX - Node 8"
+  #   os: osx
+  #   env:
+  #   - TRAVIS_NODE_VERSION="8"
+  #   - SKIP_DEPLOY=0
+  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+
+  # - name: "Linux - Node 10"
+  #   os: linux
+  #   env:
+  #   - TRAVIS_NODE_VERSION="10"
+  #   - SKIP_DEPLOY=0
+  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+
+  # - name: "OSX - Node 10"
+  #   os: osx
+  #   env:
+  #   - TRAVIS_NODE_VERSION="10"
+  #   - SKIP_DEPLOY=0
+  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+
+  - name: "Windows - Node 8"
+    os: windows
     env:
     - TRAVIS_NODE_VERSION="8"
-    - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-  - name: "OSX - Node 8"
-    os: osx
-    env:
-    - TRAVIS_NODE_VERSION="8"
-    - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-  - name: "Linux - Node 10"
-    os: linux
-    env:
-    - TRAVIS_NODE_VERSION="10"
-    - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-  - name: "OSX - Node 10"
-    os: osx
-    env:
-    - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
 
-  # Publish to npm only on release tag
-  - stage: publish
-    name: "Publish to npm"
-    os: linux
-    env: 
-      - TRAVIS_NODE_VERSION="8"
-      - SKIP_DEPLOY=1
+  # # Publish to npm only on release tag
+  # - stage: publish
+  #   name: "Publish to npm"
+  #   os: linux
+  #   env: 
+  #     - TRAVIS_NODE_VERSION="8"
+  #     - SKIP_DEPLOY=1
       
-    if: tag =~ /^v\d+\.\d+\.\d+/
-    before_install:
-      - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-    script: 
-      - echo "Deploying to NPM..."
-      - node publish.js --publish
+  #   if: tag =~ /^v\d+\.\d+\.\d+/
+  #   before_install:
+  #     - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+  #   script: 
+  #     - echo "Deploying to NPM..."
+  #     - node publish.js --publish
 
 install:
   # install our own nodejs to get a reasonable version
@@ -73,17 +83,17 @@ script:
     # - pushd native/ && cargo fmt -- --check && popd
     - node publish.js
 
-# deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
-deploy:
-    provider: releases
-    api_key:
-        secure: XJ7YlkRvxWVRHsn9mv9G2mrdqX3gtLOQqBFuPMEZu4v72QElsDxQRNRBBc+AsAUofSlMaxYvVA8eccF8ddMoFyCAfWqDqGYBdiGxjGANlnP6At/uK3pQe18xnG6G/0HX9wvtxojfp9b3SSunsz8blwsQTTpiKtl3owpd5s/zLT351UrK805QDcFyKrNtAe2W8RWxhqveIzmYpKD0znSvKHZCrChIxj3A+sx1EUGnGVwDDGqpQfmgQuin85Lws146I/JHyr2cYxWo4K+MyCMkPoV4MfEAGfFxTdrjVDDH6NGaoVfFggVVH2i/U1dSojGjVyz6/nWHgJfIR77AcpbG9LMcQYQPuoPWcGo7jfW3VylnD9w09LOawMGG0d7D2vS7KqQbq/4wT5RZGdY4rQQ5An285M/oWxyFqlFoN831EnRJvojygsBGg4rTCTrs32wBOq8mtdH/T6ejp0v5Y1+qp6sx+EsFlLyeki8YKwuSZpu/IRVq7P6QTQt3cWRR35SNu4AyIO4C7izghwTKVqnF+J7uVub5hr2uFrjSH6Os6ArvzciBaYcoznLcYu/91ufTv2D8PbzmEOfjNdaJpfL1UC1ElTLJncmrMZ7IfH/jePTEd5kvR7Vze5fBL5ibnMtjr/KJHFBTH2lR2CYd0W9HQJcFN1rpQJ00UgtOydSbuaE=
-    file_glob: true
-    file: bin-package/*.tar.gz
-    skip_cleanup: true
+# # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
+# deploy:
+#     provider: releases
+#     api_key:
+#         secure: XJ7YlkRvxWVRHsn9mv9G2mrdqX3gtLOQqBFuPMEZu4v72QElsDxQRNRBBc+AsAUofSlMaxYvVA8eccF8ddMoFyCAfWqDqGYBdiGxjGANlnP6At/uK3pQe18xnG6G/0HX9wvtxojfp9b3SSunsz8blwsQTTpiKtl3owpd5s/zLT351UrK805QDcFyKrNtAe2W8RWxhqveIzmYpKD0znSvKHZCrChIxj3A+sx1EUGnGVwDDGqpQfmgQuin85Lws146I/JHyr2cYxWo4K+MyCMkPoV4MfEAGfFxTdrjVDDH6NGaoVfFggVVH2i/U1dSojGjVyz6/nWHgJfIR77AcpbG9LMcQYQPuoPWcGo7jfW3VylnD9w09LOawMGG0d7D2vS7KqQbq/4wT5RZGdY4rQQ5An285M/oWxyFqlFoN831EnRJvojygsBGg4rTCTrs32wBOq8mtdH/T6ejp0v5Y1+qp6sx+EsFlLyeki8YKwuSZpu/IRVq7P6QTQt3cWRR35SNu4AyIO4C7izghwTKVqnF+J7uVub5hr2uFrjSH6Os6ArvzciBaYcoznLcYu/91ufTv2D8PbzmEOfjNdaJpfL1UC1ElTLJncmrMZ7IfH/jePTEd5kvR7Vze5fBL5ibnMtjr/KJHFBTH2lR2CYd0W9HQJcFN1rpQJ00UgtOydSbuaE=
+#     file_glob: true
+#     file: bin-package/*.tar.gz
+#     skip_cleanup: true
 
-    # publish only if we're building a tag and if the SKIP_DEPLOY is set to 0
-    on:
-        tags: true
-        condition: $SKIP_DEPLOY = 0
-    name: Version $TRAVIS_TAG
+#     # publish only if we're building a tag and if the SKIP_DEPLOY is set to 0
+#     on:
+#         tags: true
+#         condition: $SKIP_DEPLOY = 0
+#     name: Version $TRAVIS_TAG
