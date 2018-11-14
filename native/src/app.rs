@@ -1,7 +1,7 @@
 use holochain_core::{
     context::Context as HolochainContext, logger::Logger, persister::SimplePersister,
 };
-use holochain_cas_implementations::{cas::file::FilesystemStorage, eav::file::EavFileStorage};
+use holochain_cas_implementations::{cas::memory::MemoryStorage, eav::memory::EavMemoryStorage};
 use holochain_container_api::Holochain;
 use holochain_dna::Dna;
 use holochain_core_types::{
@@ -38,8 +38,8 @@ declare_types! {
                 agent,
                 Arc::new(Mutex::new(NullLogger {})),
                 Arc::new(Mutex::new(SimplePersister::new("foo".to_string()))),
-                Arc::new(RwLock::new(FilesystemStorage::new(tempdir().unwrap().path().to_str().unwrap()).unwrap())),
-                Arc::new(RwLock::new(EavFileStorage::new(tempdir().unwrap().path().to_str().unwrap().to_string()).unwrap())),
+                Arc::new(RwLock::new(MemoryStorage::new().unwrap())),
+                Arc::new(RwLock::new(EavMemoryStorage::new().unwrap())),
             ).unwrap());
 
             let dna = Dna::try_from(JsonString::from(dna_data)).expect("unable to parse dna data");
