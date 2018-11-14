@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: rust
 rust:
 - nightly
@@ -53,7 +53,10 @@ jobs:
       - echo "Deploying to NPM..."
       - node publish.js --publish
 
+
 install:
+  - sudo apt-get install -y libzmq3-dev
+
   # install our own nodejs to get a reasonable version
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
   
