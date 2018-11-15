@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: rust
 rust:
 - nightly
@@ -63,13 +63,21 @@ jobs:
   #     - echo "Deploying to NPM..."
   #     - node publish.js --publish
 
-
-before_install:
-  - choco install nodist
-
 install:
+  - choco install nodist
   - nodist global $TRAVIS_NODE_VERSION
   - choco install yarn
+  # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
+  # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  #     echo "deb http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/ ./" >> /etc/apt/sources.list;
+  #     wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/Release.key -O- | sudo apt-key add;
+  #     sudo apt-get update -qq;
+  #     sudo apt-get install libzmq3-dev;
+  #   fi
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install zmq; fi
+
+  # # install our own nodejs to get a reasonable version
+  # - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
   
   # install our own nodejs to get a reasonable version
   # - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
@@ -89,15 +97,14 @@ script:
     # - pushd native/ && cargo fmt -- --check && popd
     - node publish.js
 
-# # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
+# deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
 # deploy:
 #     provider: releases
 #     api_key:
-#         secure: XJ7YlkRvxWVRHsn9mv9G2mrdqX3gtLOQqBFuPMEZu4v72QElsDxQRNRBBc+AsAUofSlMaxYvVA8eccF8ddMoFyCAfWqDqGYBdiGxjGANlnP6At/uK3pQe18xnG6G/0HX9wvtxojfp9b3SSunsz8blwsQTTpiKtl3owpd5s/zLT351UrK805QDcFyKrNtAe2W8RWxhqveIzmYpKD0znSvKHZCrChIxj3A+sx1EUGnGVwDDGqpQfmgQuin85Lws146I/JHyr2cYxWo4K+MyCMkPoV4MfEAGfFxTdrjVDDH6NGaoVfFggVVH2i/U1dSojGjVyz6/nWHgJfIR77AcpbG9LMcQYQPuoPWcGo7jfW3VylnD9w09LOawMGG0d7D2vS7KqQbq/4wT5RZGdY4rQQ5An285M/oWxyFqlFoN831EnRJvojygsBGg4rTCTrs32wBOq8mtdH/T6ejp0v5Y1+qp6sx+EsFlLyeki8YKwuSZpu/IRVq7P6QTQt3cWRR35SNu4AyIO4C7izghwTKVqnF+J7uVub5hr2uFrjSH6Os6ArvzciBaYcoznLcYu/91ufTv2D8PbzmEOfjNdaJpfL1UC1ElTLJncmrMZ7IfH/jePTEd5kvR7Vze5fBL5ibnMtjr/KJHFBTH2lR2CYd0W9HQJcFN1rpQJ00UgtOydSbuaE=
+#         secure: RmlFk4bed1I8pRV9cEihHx6gKtJT8KqSHTLXh6usut87MTLz3Nbil6sYwG8gI+MJjy5Q5ScoACgpyQHGX7W/eSvmP2te878TecppHPAlF1JfM3O9jYMahS8ME6+HwtTEZBkdIVvJMFgCHbL13Q2utN09BcOHM9316ftce2rGz8vL/utBgzR7WY7gKeeJhPBKMyYti355Oeks4Ig2E8ELC5JP3yiuLwbqmahTbk4kXWEkzsXHHBj/uGtMFpqQ7DMfTls8pjDbagqHbswSLQ6rZfiWmt/IJdO/tGPPqD7eYAnI/uA1uHaQOOK5exwS9VsKZvOmDj/xFaLDRPEnPhDLOY7ei+NdSN2GODmIaytQg5RYBPkSX9E5mVD9bB5xIU5tu43fPMd6TcurH6OxfzbhAVza4YSII0pcu4C+v852NDiUbIFmQ93ns1YnRpql9ajZR62WhqcJucJc/PedEGd/4wF/DsBjBIHgAjReBnLdBPagi4HgE8YbBeXJK9zebZjRt0gIp45tb1MocxHO0ywz/qiYYFjYdCeF80b0WsoLb5sw5Rta7pzwVcRETNhJ//mnw3Ws0pCu7H5gHuwtnXjDaHxK5y/lll14XatHTCWA0wRBi45iAoJKYKStzB+QS7F2biIEwaBBR0OoeFCOZu1zQy0lTtwhYQ0zth1jr8usPtU=
 #     file_glob: true
 #     file: bin-package/*.tar.gz
 #     skip_cleanup: true
-
 #     # publish only if we're building a tag and if the SKIP_DEPLOY is set to 0
 #     on:
 #         tags: true
