@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: rust
 rust:
 - nightly
@@ -53,7 +53,17 @@ jobs:
       - echo "Deploying to NPM..."
       - node publish.js --publish
 
+
 install:
+  # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      echo "deb http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/ ./" >> /etc/apt/sources.list;
+      wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/Release.key -O- | sudo apt-key add;
+      sudo apt-get update -qq;
+      sudo apt-get install libzmq3-dev;
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install zmq; fi
+
   # install our own nodejs to get a reasonable version
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
   
