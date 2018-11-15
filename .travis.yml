@@ -55,8 +55,8 @@ jobs:
 
 
 install:
+  # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
       echo "deb http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/ ./" >> /etc/apt/sources.list;
       wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/Release.key -O- | sudo apt-key add;
       sudo apt-get update -qq;
