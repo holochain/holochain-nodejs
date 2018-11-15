@@ -34,20 +34,27 @@ shell.rm("-rf", "./build");
 // Cleanup any previous Rust builds, update deps, and compile
 shell.exec("yarn install --ignore-scripts");
 shell.exec("yarn run clean");
+
+// copy files to include in release
+shell.mkdir("./dist");
+shell.cp(["README.md", "package.json", "index.js"], "./dist");
+shell.cp("-R", "./native/", "./dist");
+shell.rm("-rf", "./dist/native/target");
+
+
 shell.pushd("./native");
 shell.exec("cargo update");
 shell.popd();
 shell.exec("yarn run compile");
 
-// shell.exec("yarn test");
-shell.mkdir("./dist");
 
-shell.cp(["README.md", "package.json", "index.js"], "./dist");
 
 //Add a NPM install script to the package.json that we push to NPM so that when consumers pull it down it
 //runs the expected node-pre-gyp step.
 const npmPackageJson = require("./dist/package.json");
-npmPackageJson.scripts.install = "node-pre-gyp install || npm run compile";
+npmPackageJson.scripts.install = "node-pre-gyp install || npm run fallback";
+npmPackageJson.scripts.fallback = "npm run compile && mkdir -p bin-package && cp native/index.node bin-package";
+
 fs.writeFileSync("./dist/package.json", JSON.stringify(npmPackageJson, null, 2));
 
 shell.mkdir("./bin-package");
