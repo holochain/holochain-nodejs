@@ -48,6 +48,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
 
+  # 
   # # Publish to npm only on release tag
   # - stage: publish
   #   name: "Publish to npm"
