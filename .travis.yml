@@ -66,8 +66,9 @@ jobs:
 
 install:
   - choco install nodist
-  - nodist global $TRAVIS_NODE_VERSION
   - choco install yarn
+  - nodist add $TRAVIS_NODE_VERSION
+  - nodist $TRAVIS_NODE_VERSION
   # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
   # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   #     echo "deb http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/ ./" >> /etc/apt/sources.list;
