@@ -37,6 +37,18 @@ jobs:
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "Linux - Node 11"
+    os: linux
+    env:
+    - TRAVIS_NODE_VERSION="11"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+  - name: "OSX - Node 11"
+    os: osx
+    env:
+    - TRAVIS_NODE_VERSION="11"
+    - SKIP_DEPLOY=0
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
 
   # Publish to npm only on release tag
   - stage: publish
