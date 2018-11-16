@@ -1,8 +1,9 @@
+sudo: true
+language: rust
+
 jobs:
   include:
   - name: "Windows - Node 8"
-    sudo: true
-    language: rust
     rust: nightly-2018-10-12-x86_64-pc-windows-msvc
     os: windows
     env:
@@ -11,26 +12,26 @@ jobs:
     - SKIP_DEPLOY=0
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-    before_install:
-      - choco install nodist
-      - choco upgrade yarn
-      - export PATH="/c/Program Files (x86)/Yarn/bin:/c/Program Files (x86)/Nodist/bin:$PATH"
-    install:
-      - export NODE_PATH="/c/Program Files (x86)\Nodist\bin\node_modules;$NODE_PATH"
-      - export NODIST_PREFIX="/c/Program Files (x86)\Nodist"
-      - export NODIST_X64=1
-      - nodist add $TRAVIS_NODE_VERSION
-      - nodist $TRAVIS_NODE_VERSION
-      - node -e "console.log(process.argv[0], process.arch, process.versions)"
-      - rustup component add rustfmt-preview
-      # bring in holochain-rust for prebuilt 4.1 zmq binary
-      - git clone https://github.com/holochain/holochain-rust.git
-      - yarn install --ignore-scripts
-      - npm install --scripts-prepend-node-path=true --global --vs2015 --production windows-build-tools
-      # deps for neon, found at https://guides.neon-bindings.com/getting-started/
-      - yarn config set python python2.7
-      - npm config set msvs_version 2015
-      - yarn config set msvs_version 2015 --global
-    script:
-      - PATH=$PATH:/c/Users/travis/build/holochain/holochain-nodejs/holochain-rust/vendor/zmq/bin
-      - node publish.js
+before_install:
+  - choco install nodist
+  - choco upgrade yarn
+  - export PATH="/c/Program Files (x86)/Yarn/bin:/c/Program Files (x86)/Nodist/bin:$PATH"
+install:
+  - export NODE_PATH="/c/Program Files (x86)\Nodist\bin\node_modules;$NODE_PATH"
+  - export NODIST_PREFIX="/c/Program Files (x86)\Nodist"
+  - export NODIST_X64=1
+  - nodist add $TRAVIS_NODE_VERSION
+  - nodist $TRAVIS_NODE_VERSION
+  - node -e "console.log(process.argv[0], process.arch, process.versions)"
+  - rustup component add rustfmt-preview
+  # bring in holochain-rust for prebuilt 4.1 zmq binary
+  - git clone https://github.com/holochain/holochain-rust.git
+  - yarn install --ignore-scripts
+  - npm install --scripts-prepend-node-path=true --global --vs2015 --production windows-build-tools
+  # deps for neon, found at https://guides.neon-bindings.com/getting-started/
+  - yarn config set python python2.7
+  - npm config set msvs_version 2015
+  - yarn config set msvs_version 2015 --global
+script:
+  - PATH=$PATH:/c/Users/travis/build/holochain/holochain-nodejs/holochain-rust/vendor/zmq/bin
+  - node publish.js
