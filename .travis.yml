@@ -16,7 +16,7 @@ jobs:
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    # if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
 
 before_install:
   - choco install nodist
