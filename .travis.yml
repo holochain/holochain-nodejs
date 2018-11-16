@@ -64,11 +64,12 @@ jobs:
   #     - echo "Deploying to NPM..."
   #     - node publish.js --publish
 
-before_install:
+install:
   - choco install nodist
   - choco install yarn
-
-install:
+  - Install-ChocolateyPath -PathToInstall "C:\ProgramData\Chocolatey\nodist"
+  - Install-ChocolateyPath -PathToInstall "C:\ProgramData\Chocolatey\yarn"
+  - refreshenv
   - nodist add $TRAVIS_NODE_VERSION
   - nodist $TRAVIS_NODE_VERSION
   # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
