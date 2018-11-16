@@ -14,14 +14,13 @@ jobs:
     - RUST_BACKTRACE=1
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
-    - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\Connoropolous\\holochain-nodejs\\holochain-rust\\vendor\\zmq
+    - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     before_install:
       - choco install nodist
       - choco upgrade yarn
       - export PATH="/c/Program Files (x86)/Yarn/bin:/c/Program Files (x86)/Nodist/bin:$PATH"
     install:
-      - ls "/c/Program Files"
       - export NODE_PATH="/c/Program Files (x86)\Nodist\bin\node_modules;$NODE_PATH"
       - export NODIST_PREFIX="/c/Program Files (x86)\Nodist"
       - export NODIST_X64=1
@@ -38,6 +37,5 @@ jobs:
       - npm config set msvs_version 2015
       - yarn config set msvs_version 2015 --global
     script:
-      - PATH=$PATH:/c/Users/travis/build/Connoropolous/holochain-nodejs/holochain-rust/vendor/zmq/bin
-      - cat ./node_modules/.bin/node-pre-gyp
+      - PATH=$PATH:/c/Users/travis/build/holochain/holochain-nodejs/holochain-rust/vendor/zmq/bin
       - node publish.js
