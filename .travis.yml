@@ -1,8 +1,3 @@
-# all unlabeled jobs run at test. Only if all "test" jobs finish, will the publish job run
-stages:
-  - test
-  - publish
-
 jobs:
   include:
   - name: "Windows - Node 8"
