@@ -1,8 +1,3 @@
-sudo: true
-language: rust
-rust:
-- nightly
-
 # all unlabeled jobs run at test. Only if all "test" jobs finish, will the publish job run
 stages:
   - test
@@ -10,108 +5,39 @@ stages:
 
 jobs:
   include:
-
-  # PRs, pushes to master, and tags build on all target arches
-  # if this is release tag, the resultant binary will be uploaded to github
-  # - name: "Linux - Node 8"
-  #   os: linux
-  #   env:
-  #   - TRAVIS_NODE_VERSION="8"
-  #   - SKIP_DEPLOY=0
-  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-
-  # - name: "OSX - Node 8"
-  #   os: osx
-  #   env:
-  #   - TRAVIS_NODE_VERSION="8"
-  #   - SKIP_DEPLOY=0
-  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-
-  # - name: "Linux - Node 10"
-  #   os: linux
-  #   env:
-  #   - TRAVIS_NODE_VERSION="10"
-  #   - SKIP_DEPLOY=0
-  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-
-  # - name: "OSX - Node 10"
-  #   os: osx
-  #   env:
-  #   - TRAVIS_NODE_VERSION="10"
-  #   - SKIP_DEPLOY=0
-  #   if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-
   - name: "Windows - Node 8"
+    sudo: true
+    language: rust
+    rust: nightly-2018-10-12-x86_64-pc-windows-msvc
     os: windows
     env:
-    - TRAVIS_NODE_VERSION="8"
+    - RUST_BACKTRACE=1
+    - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
+    - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\Connoropolous\\holochain-nodejs\\holochain-rust\\vendor\\zmq
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
-
-  # 
-  # # Publish to npm only on release tag
-  # - stage: publish
-  #   name: "Publish to npm"
-  #   os: linux
-  #   env: 
-  #     - TRAVIS_NODE_VERSION="8"
-  #     - SKIP_DEPLOY=1
-      
-  #   if: tag =~ /^v\d+\.\d+\.\d+/
-  #   before_install:
-  #     - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-  #   script: 
-  #     - echo "Deploying to NPM..."
-  #     - node publish.js --publish
-
-install:
-  - choco install nodist
-  - choco install yarn
-  - Install-ChocolateyPath -PathToInstall "C:\ProgramData\Chocolatey\nodist"
-  - Install-ChocolateyPath -PathToInstall "C:\ProgramData\Chocolatey\yarn"
-  - refreshenv
-  - nodist add $TRAVIS_NODE_VERSION
-  - nodist $TRAVIS_NODE_VERSION
-  # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
-  # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  #     echo "deb http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/ ./" >> /etc/apt/sources.list;
-  #     wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/xUbuntu_14.04/Release.key -O- | sudo apt-key add;
-  #     sudo apt-get update -qq;
-  #     sudo apt-get install libzmq3-dev;
-  #   fi
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install zmq; fi
-
-  # # install our own nodejs to get a reasonable version
-  # - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-  
-  # install our own nodejs to get a reasonable version
-  # - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-  # install our own yarn to make things work on osx
-  # - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.10.1
-  # - export PATH=$HOME/.yarn/bin:$PATH
-
-cache:
-    yarn: true
-    cargo: true
-    directories:
-        - node_modules
-before_script:
-    - rustup component add rustfmt-preview
-    - yarn install --ignore-scripts
-script:
-    # - pushd native/ && cargo fmt -- --check && popd
-    - node publish.js
-
-# deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
-# deploy:
-#     provider: releases
-#     api_key:
-#         secure: RmlFk4bed1I8pRV9cEihHx6gKtJT8KqSHTLXh6usut87MTLz3Nbil6sYwG8gI+MJjy5Q5ScoACgpyQHGX7W/eSvmP2te878TecppHPAlF1JfM3O9jYMahS8ME6+HwtTEZBkdIVvJMFgCHbL13Q2utN09BcOHM9316ftce2rGz8vL/utBgzR7WY7gKeeJhPBKMyYti355Oeks4Ig2E8ELC5JP3yiuLwbqmahTbk4kXWEkzsXHHBj/uGtMFpqQ7DMfTls8pjDbagqHbswSLQ6rZfiWmt/IJdO/tGPPqD7eYAnI/uA1uHaQOOK5exwS9VsKZvOmDj/xFaLDRPEnPhDLOY7ei+NdSN2GODmIaytQg5RYBPkSX9E5mVD9bB5xIU5tu43fPMd6TcurH6OxfzbhAVza4YSII0pcu4C+v852NDiUbIFmQ93ns1YnRpql9ajZR62WhqcJucJc/PedEGd/4wF/DsBjBIHgAjReBnLdBPagi4HgE8YbBeXJK9zebZjRt0gIp45tb1MocxHO0ywz/qiYYFjYdCeF80b0WsoLb5sw5Rta7pzwVcRETNhJ//mnw3Ws0pCu7H5gHuwtnXjDaHxK5y/lll14XatHTCWA0wRBi45iAoJKYKStzB+QS7F2biIEwaBBR0OoeFCOZu1zQy0lTtwhYQ0zth1jr8usPtU=
-#     file_glob: true
-#     file: bin-package/*.tar.gz
-#     skip_cleanup: true
-#     # publish only if we're building a tag and if the SKIP_DEPLOY is set to 0
-#     on:
-#         tags: true
-#         condition: $SKIP_DEPLOY = 0
-#     name: Version $TRAVIS_TAG
+    before_install:
+      - choco install nodist
+      - choco upgrade yarn
+      - export PATH="/c/Program Files (x86)/Yarn/bin:/c/Program Files (x86)/Nodist/bin:$PATH"
+    install:
+      - ls "/c/Program Files"
+      - export NODE_PATH="/c/Program Files (x86)\Nodist\bin\node_modules;$NODE_PATH"
+      - export NODIST_PREFIX="/c/Program Files (x86)\Nodist"
+      - export NODIST_X64=1
+      - nodist add $TRAVIS_NODE_VERSION
+      - nodist $TRAVIS_NODE_VERSION
+      - node -e "console.log(process.argv[0], process.arch, process.versions)"
+      - rustup component add rustfmt-preview
+      # bring in holochain-rust for prebuilt 4.1 zmq binary
+      - git clone https://github.com/holochain/holochain-rust.git
+      - yarn install --ignore-scripts
+      - npm install --scripts-prepend-node-path=true --global --vs2015 --production windows-build-tools
+      # deps for neon, found at https://guides.neon-bindings.com/getting-started/
+      - yarn config set python python2.7
+      - npm config set msvs_version 2015
+      - yarn config set msvs_version 2015 --global
+    script:
+      - PATH=$PATH:/c/Users/travis/build/Connoropolous/holochain-nodejs/holochain-rust/vendor/zmq/bin
+      - cat ./node_modules/.bin/node-pre-gyp
+      - node publish.js

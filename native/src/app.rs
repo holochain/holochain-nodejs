@@ -32,7 +32,7 @@ declare_types! {
             let agent_name = ctx.argument::<JsString>(0)?.to_string(&mut ctx)?.value();
             let dna_data = ctx.argument::<JsString>(1)?.to_string(&mut ctx)?.value();
 
-            let agent = Agent::from(agent_name);
+            let agent = Agent::generate_fake(&agent_name);
 
             let context = Arc::new(HolochainContext::new(
                 agent,
