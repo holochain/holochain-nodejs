@@ -43,7 +43,7 @@ shell.rm("-rf", "./dist/native/target");
 
 
 shell.pushd("./native");
-shell.exec("cargo update");
+// shell.exec("cargo update");
 shell.popd();
 shell.exec("yarn run compile");
 
