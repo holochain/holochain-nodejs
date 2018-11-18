@@ -1,7 +1,5 @@
 sudo: true
 language: rust
-rust:
-- nightly
 
 # all unlabeled jobs run at test. Only if all "test" jobs finish, will the publish job run
 stages:
@@ -9,6 +7,7 @@ stages:
   - publish
 
 _install_unix_template: &_install_unix_template
+  rust: nightly
   install:
   # configuration borrowed from holochain-rust Makefile, showing how to install zmq for ubuntu trusty on travis
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -25,6 +24,8 @@ _install_unix_template: &_install_unix_template
   - export PATH=$HOME/.yarn/bin:$PATH
 
 _install_windows_template: &_install_windows_template
+  os: windows
+  rust: nightly-2018-10-12-x86_64-pc-windows-msvc
   install:
   - choco install nodist
   - choco upgrade yarn
@@ -64,10 +65,6 @@ jobs:
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
   - <<: *_install_windows_template
     name: "Windows - Node 8"
-    os: windows
-    rust:
-    # match the rust windows nightly version from holochain-rust
-    - nightly-2018-10-12-x86_64-pc-windows-msvc
     env:
     - TRAVIS_NODE_VERSION="8"
     - SKIP_DEPLOY=0
@@ -89,10 +86,6 @@ jobs:
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
   - <<: *_install_windows_template
     name: "Windows - Node 10"
-    os: windows
-    rust:
-    # match the rust windows nightly version from holochain-rust
-    - nightly-2018-10-12-x86_64-pc-windows-msvc
     env:
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
@@ -114,10 +107,6 @@ jobs:
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
   - <<: *_install_windows_template
     name: "Windows - Node 11"
-    os: windows
-    rust:
-    # match the rust windows nightly version from holochain-rust
-    - nightly-2018-10-12-x86_64-pc-windows-msvc
     env:
     - TRAVIS_NODE_VERSION="11"
     - SKIP_DEPLOY=0
