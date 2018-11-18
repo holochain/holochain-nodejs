@@ -57,7 +57,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_unix_template
+    - *install_unix_template
   - name: "OSX - Node 8"
     os: osx
     env:
@@ -65,7 +65,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_unix_template
+    - *install_unix_template
   - name: "Windows - Node 8"
     os: windows
     rust:
@@ -77,7 +77,7 @@ jobs:
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_windows_template
+    - *install_windows_template
   - name: "Linux - Node 10"
     os: linux
     env:
@@ -85,7 +85,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_unix_template
+    - *install_unix_template
   - name: "OSX - Node 10"
     os: osx
     env:
@@ -93,7 +93,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_unix_template
+    - *install_unix_template
   - name: "Windows - Node 10"
     os: windows
     rust:
@@ -105,7 +105,7 @@ jobs:
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_windows_template
+    - *install_windows_template
   - name: "Linux - Node 11"
     os: linux
     env:
@@ -113,7 +113,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_unix_template
+    - *install_unix_template
   - name: "OSX - Node 11"
     os: osx
     env:
@@ -121,7 +121,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_unix_template
+    - *install_unix_template
   - name: "Windows - Node 11"
     os: windows
     rust:
@@ -133,7 +133,7 @@ jobs:
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
     install:
-    - <<: *install_windows_template
+    - *install_windows_template
   
 
   # NOTE
