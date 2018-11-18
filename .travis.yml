@@ -55,7 +55,7 @@ jobs:
     env:
     - TRAVIS_NODE_VERSION="8"
     - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
     - *install_unix_template
   - name: "OSX - Node 8"
@@ -63,7 +63,7 @@ jobs:
     env:
     - TRAVIS_NODE_VERSION="8"
     - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
     - *install_unix_template
   - name: "Windows - Node 8"
@@ -75,7 +75,7 @@ jobs:
     - TRAVIS_NODE_VERSION="8"
     - SKIP_DEPLOY=0
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
     - *install_windows_template
   - name: "Linux - Node 10"
@@ -83,7 +83,7 @@ jobs:
     env:
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
     - *install_unix_template
   - name: "OSX - Node 10"
@@ -91,7 +91,7 @@ jobs:
     env:
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
     - *install_unix_template
   - name: "Windows - Node 10"
@@ -103,7 +103,7 @@ jobs:
     - TRAVIS_NODE_VERSION="10"
     - SKIP_DEPLOY=0
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
     - *install_windows_template
   - name: "Linux - Node 11"
@@ -111,7 +111,7 @@ jobs:
     env:
     - TRAVIS_NODE_VERSION="11"
     - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
     - *install_unix_template
   - name: "OSX - Node 11"
@@ -119,9 +119,9 @@ jobs:
     env:
     - TRAVIS_NODE_VERSION="11"
     - SKIP_DEPLOY=0
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
-    - *install_unix_template
+    - <<: *install_unix_template
   - name: "Windows - Node 11"
     os: windows
     rust:
@@ -131,9 +131,9 @@ jobs:
     - TRAVIS_NODE_VERSION="11"
     - SKIP_DEPLOY=0
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
-    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = master OR type = pull_request
+    if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
-    - *install_windows_template
+    - <<: *install_windows_template
   
 
   # NOTE
