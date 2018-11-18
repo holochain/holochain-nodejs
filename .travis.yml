@@ -121,7 +121,7 @@ jobs:
     - SKIP_DEPLOY=0
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
-    - <<: *install_unix_template
+    - *install_unix_template
   - name: "Windows - Node 11"
     os: windows
     rust:
@@ -133,8 +133,7 @@ jobs:
     - LIBZMQ_PREFIX=C:\\Users\\travis\\build\\holochain\\holochain-nodejs\\holochain-rust\\vendor\\zmq
     if: tag =~ /^v\d+\.\d+\.\d+/ OR branch = add-windows-build OR type = pull_request
     install:
-    - <<: *install_windows_template
-  
+    - *install_windows_template
 
   # NOTE
   # the following is all commented out because windows travis
