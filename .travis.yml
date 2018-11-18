@@ -4,7 +4,8 @@ language: rust
 # all unlabeled jobs run at test. Only if all "test" jobs finish, will the publish job run
 stages:
   - test
-  - publish
+  # See notes below about why publish is not enabled
+  # - publish
 
 _install_unix_template: &_install_unix_template
   rust: nightly
@@ -134,7 +135,7 @@ jobs:
   #     - echo "Deploying to NPM..."
   #     - node publish.js --publish
 
-# all of this can be common between windows and unix
+# all of this is common between windows and unix
 cache:
     yarn: true
     cargo: true
