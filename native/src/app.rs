@@ -1,11 +1,16 @@
 use holochain_core::{
     context::Context as HolochainContext, logger::Logger, persister::SimplePersister,
 };
-use holochain_cas_implementations::{cas::memory::MemoryStorage, eav::memory::EavMemoryStorage};
+use holochain_cas_implementations::{
+    cas::file::FilesystemStorage,
+    cas::memory::MemoryStorage,
+    eav::memory::EavMemoryStorage
+};
 use holochain_container_api::Holochain;
-use holochain_dna::Dna;
+use holochain_net::p2p_network::P2pNetwork;
 use holochain_core_types::{
-    entry::agent::Agent,
+    dna::Dna,
+    agent::Agent,
     json::JsonString
 };
 use neon::context::Context;
@@ -29,23 +34,34 @@ pub struct App {
 declare_types! {
     pub class JsApp for App {
         init(mut ctx) {
+            let tempdir = tempdir().unwrap();
             let agent_name = ctx.argument::<JsString>(0)?.to_string(&mut ctx)?.value();
             let dna_data = ctx.argument::<JsString>(1)?.to_string(&mut ctx)?.value();
 
             let agent = Agent::generate_fake(&agent_name);
+            let file_storage = Arc::new(RwLock::new(
+                FilesystemStorage::new(tempdir.path().to_str().unwrap()).unwrap(),
+            ));
+            let mock_net = Arc::new(Mutex::new(P2pNetwork::new(
+                Box::new(|_r| Ok(())),
+                &json!({
+                    "backend": "mock"
+                }).into(),
+            ).unwrap()));
 
-            let context = Arc::new(HolochainContext::new(
+            let context = HolochainContext::new(
                 agent,
                 Arc::new(Mutex::new(NullLogger {})),
-                Arc::new(Mutex::new(SimplePersister::new("foo".to_string()))),
+                Arc::new(Mutex::new(SimplePersister::new(file_storage.clone()))),
                 Arc::new(RwLock::new(MemoryStorage::new().unwrap())),
                 Arc::new(RwLock::new(EavMemoryStorage::new().unwrap())),
-            ).unwrap());
+                mock_net,
+            ).unwrap();
 
             let dna = Dna::try_from(JsonString::from(dna_data)).expect("unable to parse dna data");
 
             Ok(App {
-                instance: Holochain::new(dna, context)
+                instance: Holochain::new(dna, Arc::new(context))
                 .or_else(|error| {
                     let error_string = ctx.string(format!("Unable to instantiate DNA with error: {}", error));
                     ctx.throw(error_string)
