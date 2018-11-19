@@ -10,13 +10,14 @@
   },
   "os": [
     "darwin",
-    "linux"
+    "linux",
+    "win32"
   ],
   "cpu": [
     "x64"
   ],
   "scripts": {
-    "compile": "neon build -r",
+    "compile": "neon build --release",
     "clean": "neon clean"
   },
   "dependencies": {

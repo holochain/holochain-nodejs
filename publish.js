@@ -43,7 +43,7 @@ shell.rm("-rf", "./dist/native/target");
 
 
 shell.pushd("./native");
-shell.exec("cargo update");
+// shell.exec("cargo update");
 shell.popd();
 shell.exec("yarn run compile");
 
@@ -59,7 +59,11 @@ fs.writeFileSync("./dist/package.json", JSON.stringify(npmPackageJson, null, 2))
 
 shell.mkdir("./bin-package");
 shell.cp("./native/index.node", "./bin-package");
-shell.exec("./node_modules/.bin/node-pre-gyp package");
+if (process.platform === "win32") {
+    shell.exec("sh node_modules/.bin/node-pre-gyp package");
+} else {
+    shell.exec("./node_modules/.bin/node-pre-gyp package");
+}
 var tgz = shell.exec("find ./build -name *.tar.gz");
 shell.cp(tgz, "./bin-package/");
 shell.pushd("./dist");
