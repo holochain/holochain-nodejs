@@ -1,14 +1,16 @@
 # holochain-nodejs
 
+[![Build Status](https://travis-ci.com/holochain/holochain-nodejs.svg?branch=master)](https://travis-ci.com/holochain/holochain-nodejs)
+
 Node bindings for holochain
 
 ## Installation
 
-The reccomended way to install is via npm https://www.npmjs.com/package/@holochain/holochain-nodejs.
+The recommended way to install is via npm https://www.npmjs.com/package/@holochain/holochain-nodejs.
 
 To build from source clone the repo and run
 ```
-npm ./publish.js
+node ./publish.js
 ```
 from the project root.
 
