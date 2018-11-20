@@ -32,8 +32,27 @@ app.stop();
 See also the example directory
 
 ## Deployment
+Recommended pattern for deployment:
 
-Tagging the master branch with the format `vX.X.X` will cause the CI to build for all platforms, upload the binaries to github releases and publish the package to npm.
+Use `npm version [patch, minor, major]` (depending on the type of update)
+This will create a tag, and update the package.json.
+
+Push the tags to github
+`git push --tags`
+
+Push the code to github
+`git push origin master`
+
+This will cause the CI to build for all platforms, and upload the binaries to github releases.
+
+If are added as a team member on the holochain team on npm, and have previously run `npm adduser`, skip this step.
+If you haven't, run `npm adduser`.
+Use the details of your npm user to login.
+
+Once travis has finished with the binary uploads to releases (which can be found at https://travis-ci.com/holochain/holochain-nodejs) run the following from your computer
+`node ./publish.js --publish`
+
+Until windows for travis can utilize secure environment variables without breaking (its not available as a feature yet), we cannot re-enable the automated npm publish step. When the time comes, the configuration is already in the travis file, commented out.
 
 ## Authors
 
