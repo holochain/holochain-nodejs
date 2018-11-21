@@ -22,11 +22,28 @@ module.exports = {
       throw e;
     }
     
-    app._call = app.call
+    /*
+    Holochain ALWAYS expects and passes
+    values serialized as Json. Within Holochain
+    you will see this as JsonString.
+    In order to avoid app developers having to
+    write JSON.stringify and JSON.parse for every
+    time they use app.call, we provide this convenience
+    wrapper around the native `call` that comes out of
+    the Holochain neon native bindings.
+    */
+    app._call = app.call;
     app.call = function(zome, trait, fn, params) {
       const stringInput = JSON.stringify(params);
-      const result = app._call(zome, trait, fn, stringInput);
-      return JSON.parse(result);
+      const rawResult = app._call(zome, trait, fn, stringInput);
+      let result;
+      try {
+        result = JSON.parse(rawResult);
+      } catch (e) {
+        console.log("JSON.parse failed to parse the result. The raw value is: ", rawResult);
+        result = { error: "JSON.parse failed to parse the result", rawResult };
+      }
+      return result;
     }
 
     return app;
