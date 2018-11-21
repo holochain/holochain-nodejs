@@ -65,12 +65,12 @@ _env_node_8_deploy_template: &_env_node_8_deploy_template
 
 _env_node_10_deploy_template: &_env_node_10_deploy_template
   env:
-  - TRAVIS_NODE_VERSION="8"
+  - TRAVIS_NODE_VERSION="10"
   - SKIP_DEPLOY=0
 
 _env_node_11_deploy_template: &_env_node_11_deploy_template
   env:
-  - TRAVIS_NODE_VERSION="8"
+  - TRAVIS_NODE_VERSION="11"
   - SKIP_DEPLOY=0
 
 jobs:
