@@ -21,6 +21,13 @@ module.exports = {
       console.log("Unable to create Holochain instance");
       throw e;
     }
+    
+    app._call = app.call
+    app.call = function(zome, trait, fn, params) {
+      const stringInput = JSON.stringify(params);
+      const result = app._call(zome, trait, fn, stringInput);
+      return JSON.parse(result);
+    }
 
     return app;
   }
