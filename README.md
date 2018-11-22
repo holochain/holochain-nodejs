@@ -1,6 +1,6 @@
 # holochain-nodejs
 
-[![Build Status](https://travis-ci.com/holochain/holochain-nodejs.svg?branch=master)](https://travis-ci.com/holochain/holochain-nodejs)
+### This repo has moved to https://github.com/holochain/holochain-rust/tree/develop/nodejs_container
 
 Node bindings for holochain
 
