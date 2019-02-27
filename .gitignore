@@ -7,4 +7,3 @@ native/artifacts.json
 dist/*
 bin-package/*
 build/*
-example/foo
