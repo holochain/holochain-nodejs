@@ -6,6 +6,7 @@ jobs:
    - image: ubuntu
   steps:
    - checkout
+   - run: apt-get update
 
     #   # holochain-nodejs releases section
     # - name: "Linux - Node 8"
