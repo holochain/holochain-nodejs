@@ -25,6 +25,7 @@ _nodejs_deploy_template: &_nodejs_deploy_template
   script:
       - cd $TRAVIS_BUILD_DIR
       - ls
+      - pwd
       - node publish.js
   # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
   deploy:
