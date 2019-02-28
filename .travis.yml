@@ -5,7 +5,7 @@ _linux_nodejs_template: &_linux_nodejs_template
   language: rust
   rust: nightly-2019-01-24
   before_script:
-    - . ./scripts/install/release-deps-ubuntu.sh
+    - . ./holochain-rust/scripts/install/release-deps-ubuntu.sh
 
 _to_deploy_template: &_to_deploy_template
   if: tag =~ /^holochain-nodejs-(test-)*v\d+\.\d+\.\d+/
