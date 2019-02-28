@@ -1,7 +1,7 @@
 # the following is all for nodejs deployment
 _linux_nodejs_template: &_linux_nodejs_template
   os: linux
-  dist: bionic
+  dist: xenial
   language: rust
   rust: nightly-2019-01-24
   before_script:
