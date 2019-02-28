@@ -5,7 +5,8 @@ _linux_nodejs_template: &_linux_nodejs_template
   language: rust
   rust: nightly-2019-01-24
   before_script:
-    - cd holochain-rust && . ./scripts/install/release-deps-ubuntu.sh
+    - cd $TRAVIS_BUILD_DIR/holochain-rust
+    - . ./scripts/install/release-deps-ubuntu.sh
 
 _to_deploy_template: &_to_deploy_template
   if: tag =~ /^holochain-nodejs-(test-)*v\d+\.\d+\.\d+/
@@ -22,6 +23,7 @@ _nodejs_deploy_template: &_nodejs_deploy_template
       directories:
           - node_modules
   script:
+      - cd $TRAVIS_BUILD_DIR
       - ls
       - . ./build.sh
   # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
