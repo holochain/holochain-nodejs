@@ -22,7 +22,8 @@ _nodejs_deploy_template: &_nodejs_deploy_template
       directories:
           - node_modules
   script:
-      - ./build.sh
+      - ls
+      - . ./build.sh
   # deploy the node-pre-gyp binary to github releases so it's there when the npm package is installed
   deploy:
       provider: releases
