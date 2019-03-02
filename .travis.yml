@@ -4,9 +4,6 @@ _linux_nodejs_template: &_linux_nodejs_template
   dist: xenial
   language: rust
   rust: nightly-2019-01-24
-  env:
-   - RUST_SODIUM_LIB_DIR=$TRAVIS_BUILD_DIR/libsodium-1.0.16
-   - RUST_SODIUM_SHARED=1
   before_script:
     - cd $TRAVIS_BUILD_DIR/holochain-rust
     - sudo apt-get update
@@ -27,6 +24,8 @@ _env_node_8_deploy_template: &_env_node_8_deploy_template
   env:
   - TRAVIS_NODE_VERSION="8"
   - PERFORM_NODE_DEPLOY=1
+  - RUST_SODIUM_LIB_DIR=$TRAVIS_BUILD_DIR/libsodium-1.0.16
+  - RUST_SODIUM_SHARED=1
 
 _nodejs_deploy_template: &_nodejs_deploy_template
   cache:
