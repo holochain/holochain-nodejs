@@ -23,7 +23,6 @@ WORKDIR /libsodium-1.0.16
 RUN ./configure
 RUN make && make check
 RUN sudo make install
-ENV PATH="/holochain-nodejs/libsodium-1.0.16:${PATH}"
 ENV RUST_SODIUM_LIB_DIR /holochain-nodejs/libsodium-1.0.16
 ENV RUST_SODIUM_SHARED 1
 
