@@ -24,14 +24,12 @@ RUN ./configure
 RUN make && make check
 RUN sudo make install
 ENV PATH="/holochain-nodejs/libsodium-1.0.16:${PATH}"
+ENV RUST_SODIUM_LIB_DIR /holochain-nodejs/libsodium-1.0.16
+ENV RUST_SODIUM_SHARED 1
 
 COPY . /holochain-nodejs
-
 WORKDIR /holochain-nodejs
 
 RUN yarn install --ignore-scripts
-
-ENV RUST_SODIUM_LIB_DIR /holochain-nodejs/libsodium-1.0.16
-ENV RUST_SODIUM_SHARED 1
 
 RUN node publish.js
