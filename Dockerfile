@@ -4,6 +4,8 @@ SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update
 RUN apt-get install -y sudo curl git cmake
+# libssl-dev required for zmq
+RUN sudo apt-get install -y pkg-config libssl-dev
 # RUN sudo apt-get install -y libssl-dev pkg-config python2.7 libzmq3-dev
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
