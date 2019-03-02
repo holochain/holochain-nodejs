@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:xenial
 
 SHELL ["/bin/bash", "-c"]
 
@@ -18,19 +18,20 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly-201
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN cargo -V
 
-# COPY ./libsodium-1.0.16 /libsodium-1.0.16
-# WORKDIR /libsodium-1.0.16
-# RUN ./configure
-# RUN make && make check
-# RUN sudo make install
-# ENV PATH="/holochain-nodejs/libsodium-1.0.16:${PATH}"
-
-RUN sudo apt-get install libsodium23
+COPY ./libsodium-1.0.16 /libsodium-1.0.16
+WORKDIR /libsodium-1.0.16
+RUN ./configure
+RUN make && make check
+RUN sudo make install
+ENV PATH="/holochain-nodejs/libsodium-1.0.16:${PATH}"
 
 COPY . /holochain-nodejs
 
 WORKDIR /holochain-nodejs
 
 RUN yarn install --ignore-scripts
+
+ENV RUST_SODIUM_LIB_DIR /holochain-nodejs/libsodium-1.0.16
+ENV RUST_SODIUM_SHARED 1
 
 RUN node publish.js
