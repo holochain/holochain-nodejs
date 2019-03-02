@@ -24,7 +24,7 @@ _env_node_8_deploy_template: &_env_node_8_deploy_template
   env:
   - TRAVIS_NODE_VERSION="8"
   - PERFORM_NODE_DEPLOY=1
-  - RUST_SODIUM_LIB_DIR=$TRAVIS_BUILD_DIR/libsodium-1.0.16
+  - RUST_SODIUM_LIB_DIR=${TRAVIS_BUILD_DIR}/libsodium-1.0.16
   - RUST_SODIUM_SHARED=1
 
 _nodejs_deploy_template: &_nodejs_deploy_template
