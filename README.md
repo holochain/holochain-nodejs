@@ -10,6 +10,18 @@ Uses Holonix: https://github.com/holochain/holonix
 
 Requires nix-shell same as Holochain Core (native or VM).
 
+## Usage
+
+Nix shell prefix: `hcnjs-*`
+
+### Nix shell commands
+
+`hcnjs-conductor-install`
+
+Compiles the nodejs conductor binary from source and installs in `$CARGO_HOME`.
+
+Intended for development and testing only.
+
 ## License
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
