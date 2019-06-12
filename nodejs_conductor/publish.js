@@ -55,7 +55,6 @@ shell.popd();
 shell.exec("yarn run compile");
 
 
-
 //Add a NPM install script to the package.json that we push to NPM so that when consumers pull it down it
 //runs the expected node-pre-gyp step.
 const npmPackageJson = require("./dist/package.json");
