@@ -1,64 +1,35 @@
 # holochain-nodejs
 
-### This repo has moved to https://github.com/holochain/holochain-rust/tree/develop/nodejs_container
+NodeJS Holochain Conductor.
 
-Node bindings for holochain
+Wraps the rust conductor in node.
 
 ## Installation
 
-The recommended way to install is via npm https://www.npmjs.com/package/@holochain/holochain-nodejs.
+Uses Holonix: https://github.com/holochain/holonix
 
-To build from source clone the repo and run
-```
-node ./publish.js
-```
-from the project root.
+Requires nix-shell same as Holochain Core (native or VM).
 
 ## Usage
-After installing via npm the module can be used in a node script as follows:
 
-```javascript
-const Container = require('@holochain/holochain-nodejs');
-const app = Container.loadAndInstantiate("path/to/happ.hcpkg");
-app.start();
+Nix shell prefix: `hcnjs-*`
 
-// make calls to the app instance
-// zome functions can be called using
-// app.call(zome, capability, function, params);
+### Nix shell commands
 
-app.stop();
-```
+`hcnjs-conductor-install`
 
-See also the example directory
+Compiles the nodejs conductor binary from source and installs in `$CARGO_HOME`.
 
-## Deployment
-Recommended pattern for deployment:
+Intended for development and testing only.
 
-Use `npm version [patch, minor, major]` (depending on the type of update)
-This will create a tag, and update the package.json.
+## License
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-Push the tags to github
-`git push --tags`
+Copyright (C) 2019, Holochain Foundation
 
-Push the code to github
-`git push origin master`
+This program is free software: you can redistribute it and/or modify it under the terms of the license p
+rovided in the LICENSE file (GPLv3).  This program is distributed in the hope that it will be useful, bu
+t WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.
 
-This will cause the CI to build for all platforms, and upload the binaries to github releases.
-
-If are added as a team member on the holochain team on npm, and have previously run `npm adduser`, skip this step.
-If you haven't, run `npm adduser`.
-Use the details of your npm user to login.
-
-Once travis has finished with the binary uploads to releases (which can be found at https://travis-ci.com/holochain/holochain-nodejs) run the following from your computer
-`node ./publish.js --publish`
-
-Until windows for travis can utilize secure environment variables without breaking (its not available as a feature yet), we cannot re-enable the automated npm publish step. When the time comes, the configuration is already in the travis file, commented out.
-
-## Authors
-
-- Julian Laubstein <contact@julianlaubstein.de>
-- Willem Olding <willem.olding@holo.host>
-
-## Acknowledgments
-
-- Thanks to IronCoreLabs for the example of deploying neon modules via npm (https://github.com/IronCoreLabs/recrypt-node-binding)
+**Note:** We are considering other 'looser' licensing options (like MIT license) but at this stage are using GPL while we're getting the matter sorted out.  See [this article](https://medium.com/holochain/licensing-needs-for-truly-p2p-software-a3e0fa42be6c) for some of our thinking on licensing for distributed application frameworks.
