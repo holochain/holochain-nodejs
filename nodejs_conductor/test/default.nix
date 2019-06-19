@@ -8,4 +8,6 @@ let
   && ( cd nodejs_conductor && npm test );
   '';
 in
-script
+{
+ buildInputs = [ script ];
+}
