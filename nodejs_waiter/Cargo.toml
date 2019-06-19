@@ -1,14 +1,14 @@
 [package]
 name = "holochain_node_test_waiter"
-version = "0.0.19-alpha1"
+version = "0.0.20-alpha3"
 authors = ["Holochain Core Dev Team <devcore@holochain.org>"]
 edition = "2018"
 
 [dependencies]
 colored = "=1.7.0"
 neon = "=0.2.0"
-holochain_core = { git = "https://github.com/holochain/holochain-rust.git", tag = "v0.0.19-alpha1" }
-holochain_core_types = { git = "https://github.com/holochain/holochain-rust.git", tag = "v0.0.19-alpha1" }
-holochain_dpki = { git = "https://github.com/holochain/holochain-rust.git", tag = "v0.0.19-alpha1" }
+holochain_core = { git = "https://github.com/holochain/holochain-rust.git",tag = "v0.0.20-alpha3" }
+holochain_core_types = { git = "https://github.com/holochain/holochain-rust.git",tag = "v0.0.20-alpha3" }
+holochain_dpki = { git = "https://github.com/holochain/holochain-rust.git",tag = "v0.0.20-alpha3" }
 lib3h_sodium = "=0.0.1-alpha1"
 crossbeam-channel = "=0.3.8"

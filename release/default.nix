@@ -16,5 +16,16 @@ in
   github = github;
  }).buildInputs
 
+ ++ (pkgs.callPackage ./merge {
+  release = release;
+  github = github;
+ }).buildInputs
+
+ ++ (pkgs.callPackage ./prepare { }).buildInputs
+
+ ++ (pkgs.callPackage ./versions {
+  release = release;
+ }).buildInputs
+
  ;
 }

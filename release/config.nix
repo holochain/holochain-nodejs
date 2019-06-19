@@ -11,6 +11,11 @@ rec {
   current = "0.4.19-alpha1";
  };
 
+ core = {
+  previous = "0.0.19-alpha1";
+  current = "0.0.20-alpha3";
+ };
+
  tag = "v${version.current}";
  branch = "release-${version.current}";
 }
