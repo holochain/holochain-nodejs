@@ -1,7 +1,7 @@
 { pkgs }:
 {
-  buildInputs = [
-   (pkgs.callPackage ./nix/install.nix { })
-   (pkgs.callPackage ./nix/test.nix { })
-  ];
+  buildInputs = []
+  ++ (pkgs.callPackage ./install { }).buildInputs
+  ++ (pkgs.callPackage ./test { }).buildInputs
+  ;
 }

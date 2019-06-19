@@ -13,4 +13,6 @@ let
   )
   '';
 in
-script
+{
+ buildInputs = [ script ];
+}
